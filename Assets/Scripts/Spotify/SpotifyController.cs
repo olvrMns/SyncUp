@@ -16,7 +16,10 @@ public class SpotifyController : MonoBehaviour
 
     private async void Awake()
     {
-        if (Instance == null) if (AutoStart) await Init();          
+        if (Instance == null) 
+        {
+            Instance = this;
+        }        
         else if (Instance != this) Destroy(this.gameObject);
         DontDestroyOnLoad(this);
     }

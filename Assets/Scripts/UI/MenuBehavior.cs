@@ -60,16 +60,19 @@ public class MenuBehavior : MonoBehaviour
     {
         string currentLevelName;
         LevelSelectButtonBehavior behavior;
-        //int tempHeightOffSet = 30;
+        int tempHeightOffSet = 100;
+        float currentOffSet = 0f;
         DirectoryInfo info = new DirectoryInfo(Application.dataPath + completedLevelsPath);
         foreach (FileInfo file in info.GetFiles("*.unity"))
         {
             currentLevelName = file.Name.Split(".")[0];
             GameObject button = Instantiate(LevelSelectorButtonPrefab, levelSelectorCanvas.transform);
+            button.transform.position = new Vector3(button.transform.position.x, button.transform.position.y - currentOffSet, button.transform.position.z);
             behavior = button.GetComponent<LevelSelectButtonBehavior>();
             behavior.LevelName = currentLevelName;
             behavior.SceneName = currentLevelName;
             behavior.Init();
+            currentOffSet += tempHeightOffSet;
             //levelSelectorCanvas.gameObject.GetComponent<RectTransform>()
         }
     }

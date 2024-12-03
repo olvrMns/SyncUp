@@ -1592,7 +1592,7 @@ MonoBehaviour:
   DashForce: 20
   CanDash: 1
   OnCooldown: 0
-  TriggerKey: 0
+  TriggerKey: 102
   DashType: 0
   dashForward: {fileID: 0}
   dashBackward: {fileID: 0}
@@ -1622,16 +1622,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5122c60a15b604691f5e2f0d011462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
-  TriggerKey: 0
-  MaxAmmunitionCount: 5
-  CurrentAmmunitionCount: 0
-  ReloadDurationInSeconds: 3
-  ShootingCooldownInSeconds: 3
-  CanFire: 1
-  GunWasFired: 0
-  BaseBulletModelPrefab: {fileID: 1408606670256321755, guid: 1051b24b1131aaa4b8f5ca5a094252a0, type: 3}
-  MultiBulletsPrefab: {fileID: 3861123817926825853, guid: b921a05d96b0cd84e9f4b2786f8072e4, type: 3}
 --- !u!1 &1916663631594859855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,6 +2133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59db1c6d17b49af47b478ba0bf841d00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanPause: 1
 --- !u!1 &4027739119926442734
 GameObject:
   m_ObjectHideFlags: 0

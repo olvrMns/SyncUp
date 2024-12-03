@@ -54,9 +54,9 @@ public class DashController : MonoBehaviour
             switch (DashType)
             {
                 case DashTypes.RESTRICTED:
-                    firstPersonController._rigidBody.AddForce(new Vector3(playerVelocity.x, 0, playerVelocity.z * DashForce), ForceMode.VelocityChange);
+                    firstPersonController._rigidBody.AddForce(new Vector3(playerVelocity.x * DashForce, 0, playerVelocity.z * DashForce), ForceMode.VelocityChange);
                     Debug.Log(playerVelocity.z);
-                    if(playerVelocity.z !=0)
+                    if (playerVelocity.z != 0)
                         (playerVelocity.z > 0 ? dashForward : dashBackward).Play();
                     break;
                 case DashTypes.OMNI_DIRECTIONAL:

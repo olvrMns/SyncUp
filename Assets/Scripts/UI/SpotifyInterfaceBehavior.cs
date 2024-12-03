@@ -74,6 +74,7 @@ public class SpotifyInterfaceBehavior : MonoBehaviour
 
     private async void NextAction(object sender, EventArgs e)
     {
+        Debug.Log("stop");
         await UpdateArtistTitleText();
     }
 

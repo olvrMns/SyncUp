@@ -19,8 +19,13 @@ public class OverlayController : MonoBehaviour
     private Canvas deathOverlay;
     private Canvas completionOverlay;
 
+    public bool CanPause = true;
+
+    private PlayerController playerController;
+
     private void Start()
     {
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         gameOverlay = ComponentUtils.Find<Canvas>("GameOverlay");
         pauseOverlay = ComponentUtils.Find<Canvas>("PauseOverlay");
         deathOverlay = ComponentUtils.Find<Canvas>("DeathOverlay");
@@ -37,12 +42,15 @@ public class OverlayController : MonoBehaviour
                 ChangeOverlayState(gameOverlayS: true);
                 break;
             case OverlayType.PAUSE:
-                ChangeOverlayState(pauseOverlayS: true);
+                if (!playerController.PlayerIsDead && CanPause) ChangeOverlayState(pauseOverlayS: true);
                 break;
             case OverlayType.DEATH:
                 ChangeOverlayState(deathOverlayS: true);
                 break;
             case OverlayType.COMPLETION:
+                CanPause = false;
+                playerController.PlayerCanMove = false;
+                Cursor.lockState = CursorLockMode.None;
                 ChangeOverlayState(completionOverlayS: true);
                 break;
         }
