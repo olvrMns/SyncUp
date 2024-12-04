@@ -69,8 +69,9 @@
 > - IsInitialized : SpotifyController
 > - Crossair in GameInitializer
 > - Muzzle fire particles in GameInitializer
-> - EventSystem In Level2 (bug for interfaces not working)
-
+> - EventSystem In Level2 (for interfaces not working in Level2)
+> - ImageColorSync/SyncObjects_V3 Prefab
+> - LightColorSyncer
 ## ...
 
 ## Prio

@@ -9,6 +9,7 @@ public class ColorSyncer : MonoBehaviour
     void Start()
     {
         _renderer = GetComponent<Renderer>();
+        if (ColorSync == null) ColorSync = GameObject.Find("ColorSyncBLUE").GetComponent<ColorSync>();
     }
 
     void Update()
