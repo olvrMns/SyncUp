@@ -12,4 +12,9 @@ public static class ComponentUtils
         return GameObject.FindGameObjectWithTag(tag).GetComponent<T>();
     }
 
+    public static PlayerController GetPlayerController()
+    {
+        return GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+    }
+
 }

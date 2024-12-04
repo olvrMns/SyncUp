@@ -55,7 +55,6 @@ public class DashController : MonoBehaviour
             {
                 case DashTypes.RESTRICTED:
                     firstPersonController._rigidBody.AddForce(new Vector3(playerVelocity.x * DashForce, 0, playerVelocity.z * DashForce), ForceMode.VelocityChange);
-                    Debug.Log(playerVelocity.z);
                     if (playerVelocity.z != 0)
                         (playerVelocity.z > 0 ? dashForward : dashBackward).Play();
                     break;
@@ -64,17 +63,12 @@ public class DashController : MonoBehaviour
                     break;
             }
 
-            if (spotifyController != null)
+            if (spotifyController.IsInitialized)
             {
                 await spotifyController.FastForward(8);
             }
             
         }
-    }
-
-    private void Update()
-    {
-        //Debug.Log(firstPersonController._rigidBody.velocity);
     }
 
 }

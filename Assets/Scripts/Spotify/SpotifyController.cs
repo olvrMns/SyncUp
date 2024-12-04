@@ -9,17 +9,15 @@ public class SpotifyController : MonoBehaviour
     public static SpotifyController Instance { get; private set; }
     private SpotifyClient _spotify;
     public string userId="";
-    public Boolean AutoStart = false;
+    public bool AutoStart = false;
+    public bool IsInitialized = false;
 
     public event EventHandler OnNext;
     public event EventHandler OnPrevious;
 
     private async void Awake()
     {
-        if (Instance == null) 
-        {
-            Instance = this;
-        }        
+        if (Instance == null) Instance = this;
         else if (Instance != this) Destroy(this.gameObject);
         DontDestroyOnLoad(this);
     }
@@ -28,6 +26,7 @@ public class SpotifyController : MonoBehaviour
     {
         var auth = await Auth.CreateAsync(userId);
         _spotify = new SpotifyClient(auth.AccessToken);
+        IsInitialized = true;
     }
 
     public async Task<bool> GetPlayPauseState()

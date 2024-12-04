@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody _rigidBody;
     public bool PlayerCanMove = true;
     public bool PlayerIsDead = false;
+    public bool PlayerHasWon = false;
 
     private PlayerCameraController playerCameraController;
     private JumpController jumpController;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerCanMove)
+        if (PlayerCanMove && !PlayerIsDead)
         {
             jumpController.UpdateIsGrounded();
             playerCameraController.UpdatePlayerCameraState();
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (PlayerCanMove)
+        if (PlayerCanMove && !PlayerIsDead)
         {
             sprintController.UpdateSprintMovementState();
         }

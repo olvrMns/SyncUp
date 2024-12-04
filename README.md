@@ -60,6 +60,19 @@
 > - Fixed wierd bug with duplicate ennemies
 > ### to ... | ...
 
+> ## from 2024/12/4 | 1:00 | OlvrMns (BUG FIXES & SMALL ADDITIONS)
+> - StopCaptureOnPause : PauseController
+> - Private Pause/Unpause : PauseController
+> - !PlayerIsDead : TogglePause()
+> - GetPlayerController() : ComponenetUtils
+> - ActivateCompletionOverlay() : CompleteLevel
+> - IsInitialized : SpotifyController
+> - Crossair in GameInitializer
+> - Muzzle fire particles in GameInitializer
+> - EventSystem In Level2 (bug for interfaces not working)
+
+## ...
+
 ## Prio
 - (1) LevelSelector Position OffSet In UI for more than 1 scene
 - (1) Sync level 1 
