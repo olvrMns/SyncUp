@@ -12,10 +12,13 @@ public class LevelSelectButtonBehavior : MonoBehaviour
 
     public void Init()
     {
+        Debug.Log(LevelName);
+        Debug.Log(SceneName);
         button = GetComponent<Button>();
         button.GetComponentInChildren<TextMeshProUGUI>().text = LevelName;
         button.onClick.AddListener(() =>
         {
+
             SceneManager.LoadScene(SceneName);
         });
     }

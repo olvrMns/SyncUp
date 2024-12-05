@@ -65,6 +65,7 @@ public class MenuBehavior : MonoBehaviour
         DirectoryInfo info = new DirectoryInfo(Application.dataPath + completedLevelsPath);
         foreach (FileInfo file in info.GetFiles("*.unity"))
         {
+            Debug.Log(file.FullName);
             currentLevelName = file.Name.Split(".")[0];
             GameObject button = Instantiate(LevelSelectorButtonPrefab, levelSelectorCanvas.transform);
             button.transform.position = new Vector3(button.transform.position.x, button.transform.position.y - currentOffSet, button.transform.position.z);
