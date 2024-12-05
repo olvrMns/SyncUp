@@ -1181,6 +1181,7 @@ GameObject:
   - component: {fileID: 1558444151723822074}
   - component: {fileID: 4406436372060600973}
   - component: {fileID: 3391359407018954937}
+  - component: {fileID: 6575018153773405735}
   m_Layer: 0
   m_Name: CowboyRio_Unity
   m_TagString: Untagged
@@ -1272,6 +1273,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0df3932a62f36654bbbca769bfebaa9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6575018153773405735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3346717383664697389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80e6447955893046a227a0ee109e499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3449531118754953708
