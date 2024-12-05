@@ -24,6 +24,8 @@ public class PlayerHealthController : MonoBehaviour
 
     public Slider HealthSlider;
     public bool UseHealthSlider = true;
+    public float HitCooldownDurationInSeconds = 1f;
+    public bool OnHitCooldown = false;
 
     private PlayerController playerController;
 
@@ -68,7 +70,13 @@ public class PlayerHealthController : MonoBehaviour
 
     public void ReduceHealth(float by)
     {
-        StartCoroutine(AlterateHealth(by, HealthAlterationTypes.DAMAGE));
+        if (!OnHitCooldown)
+        {
+            StartCoroutine(AlterateHealth(by, HealthAlterationTypes.DAMAGE));
+            OnHitCooldown = true;
+            StartCoroutine(TimingController.Time(TimeType.SCALEDTIME, HitCooldownDurationInSeconds, () => OnHitCooldown = false));
+        }
+        
     }
 
     public void RegainHealth(float by)

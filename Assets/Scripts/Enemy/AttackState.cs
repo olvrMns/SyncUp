@@ -3,12 +3,14 @@ using UnityEngine;
 public class Attack : State
 {
     float rotationSpeed = 2.0f;
+    private EnemyGunController gunController;
     //AudioSource shoot;
 
     public Attack(GameObject _npc, UnityEngine.AI.NavMeshAgent _agent, Animator _anim, Transform _player)
         : base(_npc, _agent, _anim, _player)
     {
         name = STATE.ATTACK;
+        gunController = _npc.GetComponent<EnemyGunController>();
         //shoot = _npc.GetComponent<AudioSource>();
     }
 
@@ -16,6 +18,7 @@ public class Attack : State
     {
         anim.SetTrigger("isShooting");
         agent.isStopped = true;
+        gunController.CanFire = true;
         //shoot.Play();
         base.Enter();
     }
@@ -27,6 +30,7 @@ public class Attack : State
         direction.y = 0.0f;
 
         npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotationSpeed);
+        gunController.Fire();
 
         if (!CanAttackPlayer())
         {
@@ -39,6 +43,7 @@ public class Attack : State
     public override void Exit()
     {
         anim.ResetTrigger("isShooting");
+        gunController.CanFire = false;
         base.Exit();
     }
 }

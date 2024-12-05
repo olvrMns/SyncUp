@@ -1136,6 +1136,37 @@ Transform:
   - {fileID: 6128634011113483615}
   m_Father: {fileID: 6068110001499474483}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3189549507442986317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1315138100024003237}
+  m_Layer: 0
+  m_Name: EnemyGunMuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1315138100024003237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3189549507442986317}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0.14029598, y: 0.3903998, z: 1.3857003}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5170104025047171713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3247562074402935102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,6 +1213,7 @@ GameObject:
   - component: {fileID: 4406436372060600973}
   - component: {fileID: 3391359407018954937}
   - component: {fileID: 6575018153773405735}
+  - component: {fileID: 7142462552314706317}
   m_Layer: 0
   m_Name: CowboyRio_Unity
   m_TagString: Untagged
@@ -1287,6 +1319,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80e6447955893046a227a0ee109e499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7142462552314706317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3346717383664697389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b5122c60a15b604691f5e2f0d011462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Muzzle: {fileID: 1315138100024003237}
+  ShootingCooldownInSeconds: 1
+  CanFire: 0
+  OnCooldown: 0
+  GunWasFired: 0
+  OnPlayer: 0
+  BaseBulletModelPrefab: {fileID: 6175684111680107173, guid: e6ad3b709552b7e4c9e9977b7cccbe5a, type: 3}
+  MultiBulletsPrefab: {fileID: 3861123817926825853, guid: b921a05d96b0cd84e9f4b2786f8072e4, type: 3}
 --- !u!1 &3449531118754953708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,7 +1882,8 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0.822}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1315138100024003237}
   m_Father: {fileID: 2682523692923476631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &8268339915782650807

@@ -3996,7 +3996,6 @@ GameObject:
   - component: {fileID: 8575705113260568035}
   - component: {fileID: 7436494111823166569}
   - component: {fileID: 8817539452197372279}
-  - component: {fileID: 7179060946236669517}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Player
@@ -4303,24 +4302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7890d2711c69942a18a5fb4d1e8cf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7179060946236669517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6564992238176193661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b5122c60a15b604691f5e2f0d011462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShootingCooldownInSeconds: 4
-  CanFire: 0
-  OnCooldown: 0
-  GunWasFired: 0
-  BaseBulletModelPrefab: {fileID: 0}
-  MultiBulletsPrefab: {fileID: 0}
 --- !u!1 &6721738264601809296
 GameObject:
   m_ObjectHideFlags: 0

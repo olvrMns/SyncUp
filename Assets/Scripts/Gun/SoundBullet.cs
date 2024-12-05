@@ -25,12 +25,15 @@ public class SoundBullet : MonoBehaviour
     public bool Dissipates = true;
     private Rigidbody _rigidbody;
     private Vector3 originalScale;
+    private AudioManager audioManager;
 
     //public bool Bounces?
     //public bool Richochet?
 
     private void Start()
     {
+        audioManager = AudioManager.Instance;
+        Direction = Direction.normalized;
         _rigidbody = GetComponent<Rigidbody>();
         timingController = GetComponent<TimingController>();
         timingController.Target = TemporalExpandingRateInSeconds;
@@ -38,32 +41,32 @@ public class SoundBullet : MonoBehaviour
         StartCoroutine(TimingController.Time(TimeType.SCALEDTIME, LifespanInSeconds, () => StartCoroutine(Dissipate())));
     }
 
-    private Vector3 AdjustPosition(Vector3 originalPoint, Vector3 scale, Vector3 direction)
-    {
-        if (direction.z >= 0 || direction.x >= 0) originalPoint.x -= scale.x;
-        else originalPoint.z -= scale.z;
+    //private Vector3 AdjustPosition(Vector3 originalPoint, Vector3 scale, Vector3 direction)
+    //{
+    //    if (direction.z >= 0 || direction.x >= 0) originalPoint.x -= scale.x;
+    //    else originalPoint.z -= scale.z;
 
-        if (direction.z >= 0 || direction.x < 0) originalPoint.y += scale.y;
-        else originalPoint.y -= scale.y;
+    //    if (direction.z >= 0 || direction.x < 0) originalPoint.y += scale.y;
+    //    else originalPoint.y -= scale.y;
 
-        return originalPoint;
-    }
+    //    return originalPoint;
+    //}
 
     public void InstantiateElements()
     {
-        originalScale = new Vector3(0.3f, 0.1f, 0.3f) * InitialElementScale;
+        //originalScale = new Vector3(0.3f, 0.1f, 0.3f) * InitialElementScale;
         Vector3 scale = originalScale;
-        float positionX = 1.2f;
-        Vector3 point;
-        Direction = Ray.direction.normalized; //new Vector3(90f * Direction.z, 0, 90f * Direction.x)
+        //float positionX = 1.2f;
+        //Vector3 point;
+        //Direction = Ray.direction.normalized; //new Vector3(90f * Direction.z, 0, 90f * Direction.x)
         elements = new GameObject[ElementCount];
         for (int elem = 0; elem < ElementCount; elem++)
         {
-            point = AdjustPosition(Ray.GetPoint(positionX), scale, Direction);
-            GameObject segment = Instantiate(BaseBulletModel, point, Quaternion.Euler(new Vector3(90f * Direction.z, 0, 90f * Direction.x)), gameObject.transform);
-            segment.transform.localScale = new Vector3(scale.x, originalScale.y, scale.z);
-            scale = scale + (Vector3.one * InitialElementsScaleExpansionRate);
-            positionX += ElementsDistanceSpacing;
+            //point = AdjustPosition(Ray.GetPoint(positionX), scale, Direction);
+            GameObject segment = Instantiate(BaseBulletModel, gameObject.transform);
+            //segment.transform.localScale = new Vector3(scale.x, originalScale.y, scale.z);
+            //scale = scale + (Vector3.one * InitialElementsScaleExpansionRate);
+            //positionX += ElementsDistanceSpacing;
             elements[elem] = segment;
         }
     }
@@ -92,8 +95,9 @@ public class SoundBullet : MonoBehaviour
 
     private void Travel()
     {
-        if (CanTravel)
-            _rigidbody.AddForce(TravelSpeed * Time.deltaTime * Direction);
+        if (CanTravel && !audioManager.Frozen)
+            _rigidbody.AddForce(Time.deltaTime * Direction * (audioManager.NormalizedCurrentLoudestSample_LastLoudestSamplesMax * 3f) * TravelSpeed);
+        else if (audioManager.Frozen) _rigidbody.velocity = Vector3.zero;
     }
 
     /// <summary>
@@ -105,11 +109,6 @@ public class SoundBullet : MonoBehaviour
         //fading
         Destroy(gameObject);
         yield return null;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Destroy(gameObject);
     }
 
     private void FixedUpdate()

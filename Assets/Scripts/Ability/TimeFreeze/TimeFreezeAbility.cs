@@ -11,18 +11,26 @@ public class TimeFreeze : Ability
     public float MaxVignetteIntensity;
     private PostProcessVolume PostProcessVolume;
     private AudioManager AudioManager;
+    private SpotifyController spotifyController;
 
     private event EventHandler UnFreezeEvent;
     private event EventHandler FreezeEvent;
 
-    void Start()
+    void Start() 
     {
+        spotifyController = SpotifyController.Instance;
         if (TriggerKey == KeyCode.None) TriggerKey = KeyCode.T;
         _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         AudioManager = AudioManager.Instance;
         PostProcessVolume = _camera.GetComponent<PostProcessVolume>();
-        FreezeEvent += (object Sender, EventArgs e) => { AudioManager.Frozen = true; };
-        UnFreezeEvent += (object Sender, EventArgs e) => { AudioManager.Frozen = false; };
+        FreezeEvent += async (object Sender, EventArgs e) => { 
+            AudioManager.Frozen = true;
+            if (spotifyController.IsInitialized) await spotifyController.Pause();
+        };
+        UnFreezeEvent += async (object Sender, EventArgs e) => { 
+            AudioManager.Frozen = false;
+            if (spotifyController.IsInitialized) await spotifyController.Play();
+        };
     }
 
     private IEnumerator Freeze()

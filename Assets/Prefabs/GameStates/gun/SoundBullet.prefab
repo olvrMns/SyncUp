@@ -48,16 +48,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InitialElementScale: 1
   InitialElementsScaleExpansionRate: 0.2
-  ElementCount: 3
+  ElementCount: 1
   ElementsDistanceSpacing: 0.8
   ScaleExpandingRate: 12
   TemporalExpandingRateInSeconds: 0.1
-  TravelSpeed: 30
+  TravelSpeed: 120
   LifespanInSeconds: 25
   Direction: {x: 0, y: 0, z: 0}
   BaseBulletModel: {fileID: 0}
   CanTravel: 0
-  Expands: 1
+  Expands: 0
   Dissipates: 1
 --- !u!54 &-3184337339268675540
 Rigidbody:

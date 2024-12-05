@@ -4,8 +4,8 @@ using UnityEngine;
 public class EnemyGunController : MonoBehaviour
 {
 
-    private GameObject player;
-    private Transform enemyTransform;
+    //private GameObject player;
+    public Transform Muzzle;
     public float ShootingCooldownInSeconds = 4f;
     private Coroutine cooldownCoroutine = null;
     public event EventHandler BeforeFiring;
@@ -13,25 +13,27 @@ public class EnemyGunController : MonoBehaviour
     public bool CanFire = false;
     public bool OnCooldown = false;
     public bool GunWasFired = false;
+    public bool OnPlayer = false;
     private Ray trajectoryRay;
     private RaycastHit hit;
     public GameObject BaseBulletModelPrefab;
     public GameObject MultiBulletsPrefab;
+    private AudioManager audioManager;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("MainCamera");
-        enemyTransform = GetComponent<Transform>();
+        audioManager = AudioManager.Instance;
+        //player = GameObject.Find("PlayerArms");
         BeforeFiring += (object sender, EventArgs e) =>
         {
-            Debug.Log("Fire");
-            GunWasFired = true;
+            if (OnPlayer) GunWasFired = true; 
+            else GunWasFired = false;
         };
 
         AfterFiring += (object sender, EventArgs e) =>
         {
+            if (GunWasFired) GoOnCooldown();
             GunWasFired = false;
-            GoOnCooldown();
             
         };
     }
@@ -51,18 +53,14 @@ public class EnemyGunController : MonoBehaviour
 
     private void UpdateBulletDirection()
     {
-        Vector3 heightenedPosition = new Vector3(
-            enemyTransform.position.x, 
-            enemyTransform.position.y + 1.2f, 
-            enemyTransform.position.z);
-        if (Physics.Raycast(heightenedPosition, player.transform.position, out hit) && CanFire) 
+        if (Physics.Raycast(Muzzle.position, Muzzle.forward, out hit, float.MaxValue) && CanFire) 
         {
-            Debug.DrawRay(heightenedPosition, player.transform.position, Color.green);
+            //Debug.DrawRay(Muzzle.position, player.transform.position, Color.green);
+            trajectoryRay = new Ray(Muzzle.position, hit.point);
             if (hit.transform.gameObject.CompareTag("Player"))
-            {
-                Debug.Log("traj");
-                trajectoryRay = new Ray(enemyTransform.position, hit.point);
-            }
+                OnPlayer = true;
+             else 
+                OnPlayer = false;
         }
     }
 
@@ -75,11 +73,13 @@ public class EnemyGunController : MonoBehaviour
 
     private void InstantiateSoundBullet()
     {
-        if (CanFire && !OnCooldown)
+        if (CanFire && !OnCooldown && OnPlayer && !audioManager.Frozen)
         {
-            GameObject _gameObject = Instantiate(MultiBulletsPrefab, enemyTransform.transform.position, Quaternion.Euler(Vector3.zero));
+            Debug.Log("OUI");
+            GameObject _gameObject = Instantiate(MultiBulletsPrefab, Muzzle.position, Quaternion.Euler(Vector3.zero));
             _gameObject.AddComponent<BulletDamage>();
             SoundBullet soundBullet = _gameObject.GetComponent<SoundBullet>();
+            soundBullet.Direction = Muzzle.forward;
             soundBullet.BaseBulletModel = BaseBulletModelPrefab;
             soundBullet.Ray = trajectoryRay;
             soundBullet.InstantiateElements();
