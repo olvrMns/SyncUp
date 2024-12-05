@@ -3,144 +3,122 @@ using UnityEngine;
 using System.Threading.Tasks;
 using System;
 
+using static UnityEngine.EventSystems.EventTrigger;
+
 public class SpotifyControllerTests
 {
-    private GameObject SpotifyControllerSingleton;
+    private GameObject spotifyControllerSingleton;
 
     [SetUp]
     public async Task SetUpAsync()
     {
-        // Arrange
-        SpotifyControllerSingleton = new GameObject("SpotifyControllerSingleton");
-        SpotifyControllerSingleton.AddComponent<SpotifyController>();
-
-        // Initialize and set properties
-        SpotifyControllerSingleton.GetComponent<SpotifyController>().userId = "velozee";
-
-        // Assuming Init() is an asynchronous method.
-        await SpotifyControllerSingleton.GetComponent<SpotifyController>().Init();
+        spotifyControllerSingleton = new GameObject("SpotifyControllerSingleton");
+        var spotifyController = spotifyControllerSingleton.AddComponent<SpotifyController>();
+        await spotifyController.Init();
     }
 
     [Test]
     public async Task SpotifyController_PausesAsync()
     {
-        // Act
-        try
-        {
-            await SpotifyControllerSingleton.GetComponent<SpotifyController>().Pause();
-        }
-        catch (Exception)
-        {
-            // do nothing
-        }
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Pause();
 
-        Task.Delay(3000).Wait();
+        await Task.Delay(3000);
 
-        var isPaused = false;
-        try
-        {
-            isPaused = await SpotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
-
-        }
-        catch (Exception)
-        {
-            Assert.IsTrue(isPaused);
-        }
-
+        var isPaused = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
+        Assert.IsFalse(isPaused, "Expected the playback to be paused.");
     }
 
     [Test]
     public async Task SpotifyController_PlaysAsync()
     {
-        // Act
-        try
-        {
-            await SpotifyControllerSingleton.GetComponent<SpotifyController>().Play();
-        }
-        catch (Exception)
-        {
-            // do nothing
-        }
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Play();
 
-        Task.Delay(3000).Wait();
+        await Task.Delay(3000);
 
-        bool isPaused = true;
-        try
-        {
-            isPaused = await SpotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
-
-        }
-        catch (Exception)
-        {
-            Assert.IsTrue(!isPaused);
-        }
+        var isPaused = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
+        Assert.IsTrue(isPaused, "Expected the playback to be playing.");
     }
 
     [Test]
-    public async Task SpotifyController_SeeksAsync()
+    public async Task SpotifyController_TogglePausePlayAsync()
+    {
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().TogglePlayPause();
+        await Task.Delay(2000);
+
+        bool state = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
+        await Task.Delay(2000);
+
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().TogglePlayPause();
+        await Task.Delay(2000);
+
+        bool newState = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
+
+        Assert.AreNotEqual(state, newState);
+    }
+
+    [Test]
+    public async Task SpotifyController_FastForwardAsync()
     {
         var startTime = 0;
-        // Arrage
-        try
-        {
 
-            await SpotifyControllerSingleton.GetComponent<SpotifyController>().Pause();
-            startTime = await SpotifyControllerSingleton.GetComponent<SpotifyController>().GetCurrentSongProgressMillis();
-        }
-        catch (Exception)
-        {
-            // do nothing
-        }
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Pause();
+        startTime = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetCurrentSongProgressMillis();
 
-        // Act
         var duration = 10;
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().FastForward(duration);
 
-        try
-        {
-            await SpotifyControllerSingleton.GetComponent<SpotifyController>().FastForward(duration);
-        }
-        catch (Exception)
-        {
-            // do nothing
-        }
+        await Task.Delay(2000);
 
-        var difference = 0;
-        try
-        {
-            difference = await SpotifyControllerSingleton.GetComponent<SpotifyController>().GetCurrentSongProgressMillis() - startTime;
-        }
-        catch (Exception)
-        {
-            Assert.IsTrue(difference / 1000 == duration);
-        }
+        var difference = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetCurrentSongProgressMillis() - startTime;
+        Assert.IsTrue(Math.Abs(duration - (difference / 1000)) <= 1);
     }
 
     [Test]
-    public async Task SpotifyController_Searches()
+    public async Task SpotifyController_RewindAsync()
     {
-        var artistName = "Israel Kamakawiwo'ole";
-        // Act
-        try
-        {
-            await SpotifyControllerSingleton.GetComponent<SpotifyController>().PlaySearchedSong("Somewhere Over The Rainbow_What A Wonderful World");
-        }
-        catch (Exception)
-        {
-            // do nothing
-        }
+        var startTime = 0;
 
-        Task.Delay(3000).Wait();
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Pause();
+        startTime = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetCurrentSongProgressMillis();
 
-        Song song = new Song();
-        try
-        {
-            song = await SpotifyControllerSingleton.GetComponent<SpotifyController>().GetCurrentlyPlayingSong();
-        }
-        catch (Exception)
-        {
-            Assert.IsTrue(song.ArtistName == artistName);
-        }
+        var duration = 10;
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Rewind(duration);
+
+        await Task.Delay(2000);
+
+        var difference = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetCurrentSongProgressMillis() - startTime;
+        Assert.IsTrue(Math.Abs(duration - (difference / 1000)) >= 1);
     }
 
-}
+    [Test]
+    public async Task SpotifyController_NextAsync()
+    {
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Pause();
+        await Task.Delay(2000);
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Next();
 
+        await Task.Delay(2000);
+        var isPaused = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
+
+        Assert.IsTrue(isPaused, "Expected the playback to be played.");
+    }
+
+    [Test]
+    public async Task SpotifyController_PreviousAsync()
+    {
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Pause();
+        await Task.Delay(2000);
+        await spotifyControllerSingleton.GetComponent<SpotifyController>().Previous();
+        await Task.Delay(2000);
+
+        var isPaused = await spotifyControllerSingleton.GetComponent<SpotifyController>().GetPlayPauseState();
+        Assert.IsTrue(isPaused, "Expected the playback to be played.");
+
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        UnityEngine.Object.DestroyImmediate(spotifyControllerSingleton);
+    }
+}

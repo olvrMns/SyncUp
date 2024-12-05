@@ -6442,10 +6442,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: Tempo
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 1457159297987703467, guid: 28120dfd8eb3d174fb2e1551254eff38, type: 3}
       propertyPath: AutoStart
       value: 1
