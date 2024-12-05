@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4336700055350018834}
   - component: {fileID: 1457159297987703467}
-  - component: {fileID: 373937177847818438}
-  - component: {fileID: 2301667360020668603}
   m_Layer: 0
   m_Name: AudioManagerSingleton
   m_TagString: AudioManager
@@ -64,36 +62,7 @@ MonoBehaviour:
   CaptureRate: 250
   IsInitialized: 0
   AutoStart: 0
+  Frozen: 0
   SampleRate: 44100
   BitsPerSample: 16
   Channels: 2
---- !u!114 &373937177847818438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4908097769709794672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39ef54251a25b27459d29494339bce0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Tempo: -1
-  FrameWindow: 15
-  CurrentlyOnBeat: 0
---- !u!114 &2301667360020668603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4908097769709794672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd7138c6ca327fd47981b09df628b43a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: 1
-  Type: 0
-  IsOnTime: 0

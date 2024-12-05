@@ -13,7 +13,7 @@ public class TempoIndicatorBehavior : MonoBehaviour
     void Start()
     {
         _image = GetComponent<Image>();
-        tempoSetter = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<TempoSetter>();
+        tempoSetter = GameObject.Find("TempoSetter").GetComponent<TempoSetter>();
         tempoSetter.OnBeat += (object sender, EventArgs e) => { _image.color = Color.red; };
         tempoSetter.OnBeatLeave += (object sender, EventArgs e) => { _image.color = Color.white; };
     }

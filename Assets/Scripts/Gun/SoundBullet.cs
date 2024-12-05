@@ -81,10 +81,14 @@ public class SoundBullet : MonoBehaviour
 
     private void Expand()
     {
-        if (Expands) Iterate((obj) => 
+        if (Expands && !audioManager.Frozen) Iterate((obj) => 
         {
             Vector3 oldScale = obj.transform.localScale;
-            obj.transform.localScale = new Vector3(oldScale.x + (originalScale.x * ScaleExpandingRate * Time.deltaTime), originalScale.y, oldScale.z + (originalScale.z * ScaleExpandingRate * Time.deltaTime));
+            obj.transform.localScale = 
+                new Vector3(
+                    oldScale.x + (originalScale.x * ScaleExpandingRate * audioManager.NormalizedCurrentLoudestSample_LastLoudestSamplesMax), 
+                    oldScale.y + (originalScale.y * ScaleExpandingRate * audioManager.NormalizedCurrentLoudestSample_LastLoudestSamplesMax), 
+                    oldScale.z + (originalScale.z * ScaleExpandingRate * audioManager.NormalizedCurrentLoudestSample_LastLoudestSamplesMax));
         });
     }
 

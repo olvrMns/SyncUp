@@ -36,7 +36,8 @@ public class TempoSetter : MonoBehaviour
     public async void HandleSongChange(object sender, EventArgs e)
     {
         Song song = await spotifyController.GetCurrentlyPlayingSong();
-        SetTempo(song.Tempo);
+        if (song == null) SetTempo(100f);
+        else SetTempo(song.Tempo);
     }
 
     public void SetTempo(float nTempo)

@@ -57,7 +57,7 @@ MonoBehaviour:
   Direction: {x: 0, y: 0, z: 0}
   BaseBulletModel: {fileID: 0}
   CanTravel: 0
-  Expands: 0
+  Expands: 1
   Dissipates: 1
 --- !u!54 &-3184337339268675540
 Rigidbody:
