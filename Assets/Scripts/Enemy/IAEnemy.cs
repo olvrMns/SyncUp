@@ -18,6 +18,8 @@ public class IAEnemy : MonoBehaviour
         anim = GetComponent<Animator>();         
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentState = new Idle(gameObject, agent, anim, player);
+        //agent.speed = 0;
+        //agent.acceleration = 0;
     }
 
     void Update()

@@ -63,6 +63,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
     public bool IsInitialized = false;
     public bool AutoStart = true;
+    public bool Frozen = false;
     public int SampleRate = 44100;
     public int BitsPerSample = 16;
     public int Channels = 2;
@@ -123,8 +124,14 @@ public class AudioManager : MonoBehaviour
 
     public void SampleCaptured(object sender, DataAvailableEventArgs _event)
     {
-        ProcessDefaultAudioStream(_event.Data);
-        this.UpdateProperties();
+        try
+        {
+            ProcessDefaultAudioStream(_event.Data);
+            this.UpdateProperties();
+        } catch (Exception ex)
+        {
+            Debug.Log(ex.Message);
+        }
     }
 
     public void StartCapture()
@@ -146,11 +153,6 @@ public class AudioManager : MonoBehaviour
     {
         this.loopbackSamples = new float[data.Length / 4];
         Buffer.BlockCopy(data, 0, this.loopbackSamples, 0, data.Length);
-    }
-
-    private void ProcessSpotifyAudioStream(byte[] data) 
-    {
-        throw new NotImplementedException();
     }
 
     private void UpdateProperties()
@@ -182,12 +184,12 @@ public class AudioManager : MonoBehaviour
 
     private void UpdateNormalizedValues()
     {
-        if (this.LastLoudestSamplesMax > 0f) 
+        if (this.LastLoudestSamplesMax > 0f && !Frozen) 
             this.NormalizedCurrentLoudestSample_LastLoudestSamplesMax = this.CurrentLoudestSample/this.LastLoudestSamplesMax;
         else
             this.NormalizedCurrentLoudestSample_LastLoudestSamplesMax = 0f;
 
-        if (this.SessionLoudestSample > 0f)
+        if (this.SessionLoudestSample > 0f && !Frozen)
             this.NormalizedCurrentLoudestSample_SessionLoudestSample = this.CurrentLoudestSample/this.SessionLoudestSample;
         else
             this.NormalizedCurrentLoudestSample_SessionLoudestSample = 0f;

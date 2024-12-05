@@ -169,7 +169,7 @@ public class RewindAbility : Ability
             StartCoroutine(Rewind());
 
 
-            if (spotifyController != null)
+            if (spotifyController.IsInitialized)
             {
                 await spotifyController.Rewind(8);
             }

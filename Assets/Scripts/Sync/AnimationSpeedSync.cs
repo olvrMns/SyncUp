@@ -8,6 +8,7 @@ public class AnimationSync: SyncObject
 
     public override void Sync()
     {
-        this.AnimationSpeed = this.InitialSpeed + this.AudioManager.NormalizedCurrentLoudestSample_LastLoudestSamplesMax;
+        
+        this.AnimationSpeed = this.InitialSpeed * this.AudioManager.NormalizedCurrentLoudestSample_LastLoudestSamplesMax;
     }
 }

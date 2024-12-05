@@ -61,7 +61,6 @@ public class OverlayController : MonoBehaviour
         Button[] buttons = pauseOverlayButtons.Concat(deathOverlayButtons).Concat(completionOverlayButtons).ToArray();
         foreach (Button button in buttons) 
         {
-            Debug.Log("Salut");
             switch(button.gameObject.name)
             {
                 case "QuitButton":

@@ -11,11 +11,12 @@ public class LightPillar : MonoBehaviour
     private ParticleSystem.MainModule module;
     private ParticleSystem.TrailModule trailModule;
     private ParticleSystem.ShapeModule shapeModule;
-    //public RotationSpeedSync RotationSpeedSync;
+    private RotationSpeedSync rotationSpeedSync;
 
 
     void Start()
     {
+        rotationSpeedSync = GameObject.Find("RotationSpeed").GetComponent<RotationSpeedSync>();
         _particleSystem = GetComponent<ParticleSystem>();
         module = _particleSystem.main;
         trailModule = _particleSystem.trails;
@@ -25,7 +26,7 @@ public class LightPillar : MonoBehaviour
     void Update()
     {
         //module.startColor = new ParticleSystem.MinMaxGradient(ColorSync.CurrentColor);
-        transform.Rotate(Time.deltaTime * Speed);
+        transform.Rotate(Time.deltaTime * Speed * (rotationSpeedSync.RotationSpeed * 2f));
         trailModule.colorOverLifetime = ColorSync.CurrentColor;
     }
 }
