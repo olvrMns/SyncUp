@@ -26,8 +26,7 @@ public class EnemyGunController : MonoBehaviour
         //player = GameObject.Find("PlayerArms");
         BeforeFiring += (object sender, EventArgs e) =>
         {
-            if (OnPlayer) GunWasFired = true; 
-            else GunWasFired = false;
+            GunWasFired = true; 
         };
 
         AfterFiring += (object sender, EventArgs e) =>
@@ -73,7 +72,7 @@ public class EnemyGunController : MonoBehaviour
 
     private void InstantiateSoundBullet()
     {
-        if (CanFire && !OnCooldown && OnPlayer && !audioManager.Frozen)
+        if (CanFire && !OnCooldown && !audioManager.Frozen)
         {
             Debug.Log("OUI");
             GameObject _gameObject = Instantiate(MultiBulletsPrefab, Muzzle.position, Quaternion.Euler(Vector3.zero));

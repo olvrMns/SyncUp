@@ -1332,7 +1332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Muzzle: {fileID: 1315138100024003237}
-  ShootingCooldownInSeconds: 1
+  ShootingCooldownInSeconds: 0.5
   CanFire: 0
   OnCooldown: 0
   GunWasFired: 0
